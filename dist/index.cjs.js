@@ -680,6 +680,12 @@ class ImageHotSpot {
         this.isInit = false;
         this.container = null;
     }
+    delImgHotArea() {
+        var _a, _b, _c;
+        (_a = this.container) === null || _a === void 0 ? void 0 : _a.querySelectorAll(".hot-square").forEach((i) => i.remove());
+        (_b = this.canvas) === null || _b === void 0 ? void 0 : _b.remove();
+        (_c = this.container) === null || _c === void 0 ? void 0 : _c.removeEventListener("mousedown", this.handleMouseDownFunc);
+    }
     // Get maximum z-index
     getMaxZIndex() {
         var _a;

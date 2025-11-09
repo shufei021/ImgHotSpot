@@ -1053,6 +1053,12 @@ interface ImgHotOptions {
       this.isInit = false;
       this.container = null
     }
+
+    delImgHotArea() {
+      this.container?.querySelectorAll(".hot-square").forEach((i) => i.remove());
+      this.canvas?.remove();
+      this.container?.removeEventListener("mousedown", this.handleMouseDownFunc);
+    }
   
     // Get maximum z-index
     getMaxZIndex() {

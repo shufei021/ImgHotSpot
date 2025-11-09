@@ -200,7 +200,8 @@
   </body>
   <script src="../dist/index.umd.js"></script>
   <script>
-    const imgHot = new ImageHotSpot({
+    const createImgHotSpot = ()=>{
+      return new ImgHotSpot({
       el: ".container",
       customUpload: true,
       // addMode:'manual',
@@ -218,11 +219,13 @@
         !hasBackgroundImage &&  alert("请先传入热区图片，再添加热区");
         return false
       },
-      afterAdd({index, square }){
+      afterAdd({seq:index, square }){
+        console.log('%c [ index ]-222', 'font-size:13px; background:pink; color:#bf2c9f;', index)
         const li = document.createElement("li");
           square.data = li;
           li.innerHTML = `<input type="text" placeholder="请输入关联内容">`;
           document.querySelector("#ol").appendChild(li);
+          console.log('%c [ dataMap ]-227', 'font-size:13px; background:pink; color:#bf2c9f;', dataMap)
           dataMap[index] = () => li.querySelector("input").value;
       },
       overlapCallback(isOverlap) {
@@ -246,6 +249,8 @@
         // h:'200px'
       }
     });
+    }
+    let imgHot = createImgHotSpot()
 
     function fileToBase64(file) {
       return new Promise((resolve) => {
@@ -263,15 +268,19 @@
 
     // 上传热区图片
     document.querySelector("#upload").onclick = () => {
+      document.querySelector("#file").value = '';
       document.querySelector("#file").click();
     };
 
     // 热区图片回显
     document.querySelector("#file").onchange = function (e) {
+      console.log('%c [ e.target.files[0] ]-277', 'font-size:13px; background:pink; color:#bf2c9f;', e.target.files[0])
       fileToBase64(e.target.files[0]).then((res) => {
+      console.log('%c [ imgHot ]-297', 'font-size:13px; background:pink; color:#bf2c9f;', imgHot)
+      imgHot = createImgHotSpot()
         console.log('%c [ res ]-267', 'font-size:13px; background:pink; color:#bf2c9f;', res)
         imgHot.uploadHotImg(res).then(({ w, h }) => {
-          console.log('%c [ uploadHotImg ]-255', 'font-size:13px; background:pink; color:#bf2c9f;')
+          console.log('%c [ uploadHotImg ]-255', 'font-size:13px; background:pink; color:#bf2c9f;',{ w, h })
           sizeInfo = {
             w,
             h,
@@ -284,6 +293,7 @@
 
     // 新增热区
     document.querySelector("#btn").onclick = () => {
+
       imgHot
         .addHotArea()
         .catch(() => {});
@@ -292,6 +302,7 @@
     // 删除热区图片
     document.querySelector("#del").onclick = () => {
       imgHot.destroy();
+      console.log('%c [ imgHot ]-297', 'font-size:13px; background:pink; color:#bf2c9f;', imgHot)
       document.querySelector("#img").style.display = "none";
       document.querySelector("#img").src = "";
       document

@@ -167,6 +167,7 @@ declare class ImageHotSpot {
     hasBackgroundImage(): boolean;
     delImage(): void;
     destroy(): void;
+    delImgHotArea(): void;
     getMaxZIndex(): number;
     /***
      * @description: 校验热区之间是否重叠
